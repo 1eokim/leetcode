@@ -3,23 +3,23 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function(s) {
-    let maxLength = 0;
+    let start = 0;
+    let end = 0;
+    let longest = 0;
+    const seenChars = new Set();
 
-    for (let i = 0; i < s.length; i++) {
-        const seenChars = new Set(); // 반복문 돌때마다 새롭게 선언해야 해서
-        let currentLength = 0; // 마찬가지
-        console.log('seenChars', seenChars);
+    for (; end < s.length;) {
+        const currentChar = s[end];
 
-        for (let j = i; j < s.length; j++) {
-            if (!seenChars.has(s[j])) {
-                seenChars.add(s[j]);
-                currentLength++;
-                maxLength = Math.max(maxLength, currentLength);
-            } else {
-                break;
-            }
+        if (!seenChars.has(currentChar)) {
+            seenChars.add(currentChar);
+            longest = Math.max(longest, end - start + 1);
+            end++;
+        } else {
+            seenChars.delete(s[start]);
+            start++;
         }
     }
 
-    return maxLength;
+    return longest;
 };
